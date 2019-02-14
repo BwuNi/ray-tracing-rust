@@ -1,0 +1,12 @@
+[package]
+name = "ray-tracing-rust"
+version = "0.1.0"
+authors = ["bwuni"]
+edition = "2018"
+
+[dependencies]
+libc = "0.2"
+
+[lib]
+name = "ffi"
+crate-type = ["dylib"]
