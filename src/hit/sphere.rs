@@ -3,6 +3,7 @@ use super::super::base::vec::Vec3;
 use super::Hitable;
 use super::HitRecord;
 
+use super::HitFunc;
 
 
 pub struct Sphere {
@@ -42,5 +43,13 @@ impl Hitable for Sphere {
         }
 
         return None;
+    }
+
+
+    fn toObj(self)-> Box<HitFunc>{
+        let hit = move |ray: &Ray, t_min: f64, t_max: f64|{
+            return self.hit(ray,t_min,t_max)
+        };
+        return Box::new(hit)
     }
 }
