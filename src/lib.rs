@@ -40,10 +40,6 @@ fn color(x: f64, y: f64) -> i32 {
     let u = ray.direction.unit_vec();
     let t = (u.1 + 1.0) * 0.5;
 
-    let res = Vec3(1., 1., 1.)
-        .muln(1.0 - t)
-        .add(&Vec3(0.3, 0.5, 1.0).muln(t));
-
     match world.hit(&ray, 0., std::f64::INFINITY) {
         Some(hit) => return hit.normal.unit_vec().addn(1.0).muln(0.5).color(),
         None => return background(ray).color(),
