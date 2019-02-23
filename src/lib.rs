@@ -4,15 +4,11 @@ mod sence;
 
 extern crate rand;
 
-use base::ray::Ray;
 use base::vec::Vec3;
-use base::camera::Camera;
-
-use hit::hitList::HitList;
-use hit::sphere::Sphere;
 use hit::Hitable;
 use rand::Rng;
 
+mod render;
 
 
 #[no_mangle]
@@ -36,9 +32,6 @@ fn color(x: f64, y: f64) -> i32 {
     let (camera,background,world) = sence::gen();
 
     let ray = camera.get_ray(x, y);
-
-    let u = ray.direction.unit_vec();
-    let t = (u.1 + 1.0) * 0.5;
 
     match world.hit(&ray, 0., std::f64::INFINITY) {
         Some(hit) => return hit.normal.unit_vec().addn(1.0).muln(0.5).color(),
