@@ -1,6 +1,7 @@
-
 const { app, BrowserWindow, ipcMain } = require('electron')
 const { fork } = require('child_process');
+
+const render =require('./node/rend')
 
 function createWindow() {
   // 创建浏览器窗口
@@ -43,16 +44,19 @@ class RenderProcess {
   }
 
   openProcess() {
-    if (this.process) {
-      this.process.kill()
-      this.process = null
-    }
-    this.process = fork("./node/render.js", [this.width, this.height])
-    this.process.on('message', m=>this.onMessage(m));
+    // if (this.process) {
+    //   this.process.kill()
+    //   this.process = null
+    // }
+    // this.process = fork("./node/render.js", [this.width, this.height])
+    // this.process.on('message', m=>this.onMessage(m));
+
+    render(m=>this.onMessage(m))
   }
 
   onMessage(m) {
     if(this.event) this.event.sender.send('px-complete', m)
+    // console.log(m)
   }
 
   close() {

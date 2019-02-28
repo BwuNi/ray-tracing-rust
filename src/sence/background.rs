@@ -1,10 +1,10 @@
 use super::super::base::ray::Ray;
 use super::super::base::vec::Vec3;
 
-pub type BackGround = Box<Fn(Ray) -> Vec3>;
+pub type BackGround = Box<Fn(&Ray) -> Vec3>;
 
 pub fn normal() -> BackGround {
-    return Box::new(|ray: Ray| {
+    return Box::new(|ray: &Ray| {
         let u = ray.direction.unit_vec();
         let t = (u.1 + 1.0) * 0.5;
 
@@ -14,8 +14,10 @@ pub fn normal() -> BackGround {
     });
 }
 
-pub fn black()  -> BackGround {
-    return Box::new(|ray: Ray| {
+#[allow(dead_code)]
+pub fn black()  -> BackGround { 
+    #[allow(unused_variables)]
+    return Box::new(|ray: &Ray| {
         return Vec3(0., 0., 0.)
     });
 }

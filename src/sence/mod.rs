@@ -1,5 +1,4 @@
 use super::base::Camera;
-use super::base::Vec3;
 use super::hit::HitList;
 
 

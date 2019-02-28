@@ -1,17 +1,15 @@
 use super::super::base::ray::Ray;
 use super::HitRecord;
 use super::Hitable;
+use crate::material::Material;
 
 pub struct HitList {
     pub list: Vec<Box<Hitable>>,
 }
 
-
 impl Hitable for HitList {
-    fn hit(&self, ray: &Ray, t_min: f64, t_max: f64) -> Option<HitRecord> {
-
-           
-        let mut res:Option<HitRecord> = None;
+    fn hit(&self, ray: &Ray, t_min: f64, t_max: f64) -> Option<(HitRecord,&Box<Material>)> {
+        let mut res:Option<(HitRecord,&Box<Material>)> = None;
 
         for obj in &self.list{
             let hit = obj.hit(ray,t_min,t_max);
@@ -19,7 +17,7 @@ impl Hitable for HitList {
             res = match res {
                 Some(old_record) => match hit {
                     Some(record) => {
-                        if record.t < old_record.t{
+                        if record.0.t < old_record.0.t{
                             Some(record)
                         }else{
                             Some(old_record)
@@ -31,10 +29,8 @@ impl Hitable for HitList {
             }
 
         } 
-
         return res;
     }
-
 }
 
 

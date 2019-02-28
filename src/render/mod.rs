@@ -1,2 +1,2 @@
 mod color;
-mod task;
+pub mod task;
